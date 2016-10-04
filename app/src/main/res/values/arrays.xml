@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <resources>
+        <array name="button_id_array">
+            <item>@id/button0</item>
+            <item>@id/button1</item>
+            <item>@id/button2</item>
+            <item>@id/button3</item>
+            <item>@id/button4</item>
+            <item>@id/button5</item>
+            <item>@id/button6</item>
+            <item>@id/button7</item>
+            <item>@id/button8</item>
+            <item>@id/button9</item>
+        </array>
+    </resources>
+</resources>
