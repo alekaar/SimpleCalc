@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button add;
     TextView t;
-    Integer sum;
+    int sum;
     StringBuilder str;
     Button[] numbers = new Button[10];
     ArrayList<Integer> values = new ArrayList<>();
@@ -24,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        add = (Button)findViewById(R.id.addButton);
+
         t = (TextView)findViewById(R.id.counterText);
+
         str = new StringBuilder();
+
         numbers[0] = (Button)findViewById(R.id.button0);
         numbers[1] = (Button)findViewById(R.id.button1);
         numbers[2] = (Button)findViewById(R.id.button2);
@@ -37,36 +39,27 @@ public class MainActivity extends AppCompatActivity {
         numbers[7] = (Button)findViewById(R.id.button7);
         numbers[8] = (Button)findViewById(R.id.button8);
         numbers[9] = (Button)findViewById(R.id.button9);
+        add = (Button)findViewById(R.id.addButton);
 
 
     }
 
-    //when push add, check if empty field and numbers present or if numbers before latest plus
-    public void addPressed(View view){
-        if(latestPlus == -1 && str.length() > 0) {
-            values.add(Integer.valueOf(str.toString()));
-            System.out.println(Integer.valueOf(str.toString()));
-            latestPlus = str.length()+1;
-            str.append("+");
-            t.setText(str);
-        }
-        else if (latestPlus > 0 && str.lastIndexOf("+") != str.length()){
-            values.add(Integer.valueOf(str.substring(latestPlus).toString()));
-            System.out.println(Integer.valueOf(str.substring(latestPlus).toString()));
-            latestPlus = str.length()+1;
-            str.append("+");
-            t.setText(str);
-        }
-        int j;
-        for(j = 0; j<values.size(); j++){
-            System.out.println(values.get(j));
-        }
-        System.out.println("j value: " + j);
-
-    }
     //add number to text and str
-    public void numberPressed(View view){
+    public void buttonPressed(View view){
         int i;
+
+        if(view.getId() == R.id.addButton
+                && str.length() > 0
+                && str.lastIndexOf("+") != str.length()){
+            str.append("+");
+            t.setText(str);
+        }
+        else if(view.getId() == R.id.clear){
+            t.setText("");
+            str = new StringBuilder();
+            values.clear();
+        }
+
         for(i = 0; i < numbers.length; i++){
             if(numbers[i].getId() == view.getId()){
                 numbers[i].getText();
@@ -75,21 +68,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-    }
-
-    //clear all
-    public void clearPressed(View view){
-        t.setText("");
-        str = new StringBuilder();
-        values.clear();
-        latestPlus = -1;
+        System.out.println(str + "|end");
     }
 
     //show result
     public void equalsPressed(View view){
-        for(int j = 0; j<values.size(); j++){
-            sum = sum + values.get(j);
+        String[] temp = str.toString().split("\\+");
+        for(int j = 0; j<temp.length; j++){
+            sum = sum + Integer.valueOf(temp[j]);
+            System.out.println(temp[j]);
         }
-        t.setText(sum.toString());
+        t.setText(Integer.toString(sum));
+        str = new StringBuilder();
+        sum = 0;
     }
 }
